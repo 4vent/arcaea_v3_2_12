@@ -1,6 +1,30 @@
 import sys
 sys.path.append('.')
 from colordprint import colordprint
+from corresponds import corres, spaces, num2char
+
+class arc_cripted_text_braker():   
+    def __init__(self, correspondence_table:dict, space_list:list):
+        self.corres = correspondence_table
+        self.spaces = space_list
+    
+    def decript(self, text):
+        result = ''
+        for c in text:
+            if c in self.spaces:
+                result += ' '
+            elif c in self.corres.keys():
+                result += '\e[31m' + self.corres[c] + '\e[0m'
+            else:
+                result += c
+        return result
+    
+    def get_space_letters(self, text):
+        space_letters = ''
+        for c in text:
+            if c in self.spaces:
+                space_letters += c
+        return space_letters
 
 cripted_texts = [
     "bO3ueWuP,3b4fEK4GVeO4vVe3VOD.",
@@ -12,66 +36,10 @@ cripted_texts = [
     "BPiK7XVi_D4b'XD7WKDj4uV4_Ehh7WrVO4KV3nEOq3VuPDeK...",
     "...iK7iu4eDE_PiOU3qVW?"
 ]
-corresponds = {
-    # official tweet hint
-    'V': 'o',
-    'a': 'L',
-    'N': 'W',
-    'd': 'S',
-    'v': 'f',
-    'I': 'Y',
-    'P': 'h',
-    'X': 'V',
-    'A': 'H',
-    'r': 'p',
-    
-    # detective
-    'b': 'I', # single char 'b' -> I
-    'O': 'n', # I? -> In
-    'D': 'e', # on? -> one
-    'u': 't', # o?he?? -> others
-    'e': 'r',
-    'K': 's',
-    'W': 'u', # tr?th -> truth
-    'f': 'w', # I ??s (be verb?) -> I was
-    'E': 'a',
-    'h': 'l', # ?ess, ?et, a??(same char) -> l
-    'G': 'b', # ?orn -> born
-    'j': 'd', # fa?e -> fade
-    'q': 'y', # awa? -> away
-    '_': 'c',  # ?ountless -> countless
-    # next
-    'B': 'T',
-    'i': 'i',
-    'U': 'g',
-    'n': 'm'
-    }
-spaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-num_2_car = {
-    '0': 'J',
-    '1': 'I', # l? L?
-    '2': 'e',
-    '3': '',
-    '4': '',
-    '5': 'j',
-    '6': '',
-    '7': 'h',
-    '8': '4',
-    '9': 'F', # key 6?
-    '10': 'E',
-    '11': 'U', # n? u?
-}
+        
+ACTB = arc_cripted_text_braker(corres, spaces)
 
 for cripted_text in cripted_texts:
-    result:str = ''
-    space_numbers = ''
-    for c in cripted_text:
-        if c in spaces:
-            result += ' '
-            space_numbers += c
-        elif c in corresponds.keys():
-            result += '\e[31m' + corresponds[c] + '\e[0m'
-        else:
-            result += c
-    print('')
-    colordprint(result)
+    space_pickup = ''
+    colordprint(ACTB.decript(cripted_text))
+    print(ACTB.get_space_letters(cripted_text))
