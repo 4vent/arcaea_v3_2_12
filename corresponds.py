@@ -26,11 +26,18 @@ corres = {
     'j': 'd', # fa?e -> fade
     'q': 'y', # awa? -> away
     '_': 'c',  # ?ountless -> countless
-    # next
+    
+    # Echoed Question
     'B': 'T',
     'i': 'i',
     'U': 'g',
-    'n': 'm'
+    'n': 'm',
+    
+    # Others
+    ',': ',',
+    "'": "'",
+    '.': '.',
+    '?': '?',
     }
     
 spaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']

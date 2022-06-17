@@ -1,18 +1,23 @@
 import re
 import console
+from random import uniform
+import numpy as np
 
 colors = {
-    '30': (0.1, 0.1, 0.1),
-    '31': (1.0, 0.3, 0.3),
-    '32': (0.0, 0.8, 0.0),
-    '33': (1.0, 1.0, 0.3),
-    '34': (0.3, 0.3, 1.0),
-    '35': (1.0, 0.3, 1.0),
-    '36': (0.3, 1.0, 1.0),
-    '37': (0.9, 0.9, 0.9),
+    '30': np.array((0.15, 0.15, 0.15)),
+    '31': np.array((1.0, 0.3, 0.3)),
+    '32': np.array((0.0, 0.8, 0.0)),
+    '33': np.array((0.9, 0.9, 0.1)),
+    '34': np.array((0.4, 0.4, 1.0)),
+    '35': np.array((1.0, 0.3, 1.0)),
+    '36': np.array((0.2, 0.9, 0.9)),
+    '37': np.array((0.95, 0.95, 0.95)),
+    
+    '38': np.array((0.4, 0.4, 0.4))
 }
 
-def colordprint(string, end='\n'):
+def colordprint(string, end='\n', colorful_strength=0, customcolor=(1.0, 1.0, 1.0)):
+    st = colorful_strength
     buffer = ''
     i = 0
     while i < len(string):
@@ -29,7 +34,13 @@ def colordprint(string, end='\n'):
             elif m:
                 print(buffer, end='')
                 buffer = ''
-                if m.groups()[0] in colors.keys():
+                if m.groups()[0] == '99':
+                    console.set_color(
+                        customcolor[0] + uniform(-st, st),
+                        customcolor[1] + uniform(-st, st),
+                        customcolor[2] + uniform(-st, st)
+                    )
+                elif m.groups()[0] in colors.keys():
                     console.set_color(*colors[m.groups()[0]])
                 else:
                     console.set_color()
@@ -44,3 +55,13 @@ def colordprint(string, end='\n'):
     
     print(buffer, end='')
     print(end, end='')
+
+if __name__ == '__main__':
+    colordprint('\e[30mthis is a sample')
+    colordprint('\e[31mthis is a sample')
+    colordprint('\e[32mthis is a sample')
+    colordprint('\e[33mthis is a sample')
+    colordprint('\e[34mthis is a sample')
+    colordprint('\e[35mthis is a sample')
+    colordprint('\e[36mthis is a sample')
+    colordprint('\e[37mthis is a sample\e[0m')
