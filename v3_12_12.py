@@ -14,10 +14,14 @@ class arc_cripted_text_braker():
             if c in self.spaces:
                 if with_num:
                     result += '\033[0m' + c + '\033[0m'
+                    result += '\033[0m' + c + '\033[0m'
                 else:
                     result += ' '
             elif c in self.corres.keys():
-                result += '\033[99m' + self.corres[c] + '\033[0m'
+                if platform.system() == 'Darwin':
+                    result += '\033[99m' + self.corres[c] + '\033[0m'
+                else:
+                    result += '\033[31m' + self.corres[c] + '\033[0m'
             else:
                 result += c
         return result
@@ -32,6 +36,8 @@ class arc_cripted_text_braker():
         return space_letters
 
 cripted_texts = [
+    "The World of Arcaea welcomes all.",
+    "",
     "bO3ueWuP,3b4fEK4GVeO4vVe3VOD.",
     "bO4ueWuP,3b4fEK7GVeO7vVe3_VWOuhDKK4VuPDeK.",
     "",
