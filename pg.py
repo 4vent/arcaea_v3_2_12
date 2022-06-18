@@ -1,2 +1,4 @@
-import numpy as np
-print(*(np.array((1, 2, 3)) * 2))
+for i in range(10):
+    for j in range(10):
+        print(f'\033[{i*10+j}m{i*10+j:03d}\033[0m ', end='')
+    print('')

@@ -1,7 +1,7 @@
 import sys
 sys.path.append('.')
-from colordprint import colordprint
 from corresponds import corres, spaces, num2char
+import platform
 
 class arc_cripted_text_braker():   
     def __init__(self, correspondence_table:dict, space_list:list):
@@ -13,11 +13,11 @@ class arc_cripted_text_braker():
         for c in text:
             if c in self.spaces:
                 if with_num:
-                    result += '\e[38m' + c + '\e[0m'
+                    result += '\033[0m' + c + '\033[0m'
                 else:
                     result += ' '
             elif c in self.corres.keys():
-                result += '\e[99m' + self.corres[c] + '\e[0m'
+                result += '\033[31m' + self.corres[c] + '\033[0m'
             else:
                 result += c
         return result
@@ -42,16 +42,27 @@ cripted_texts = [
     "...iK7iu4eDE_PiOU3qVW?",
     "",
     "bv4qVW3PDEe3nD...",
-    "hiKuDO,4EOj7E_u..."
+    "hiKuDO,4EOj7E_u...",
+    "",
+    "BPD3rEKu4DliKuK,4uPDeDvVeD3vEuD4_EO3GD7VXDeuWeODj.",
+    "IVW4DliKu3OVf4hVOU4EvuDe3vEuD7PEK4ueEOKrieDj.",
+    # ''.join(num2char.values())
 ]
         
 ACTB = arc_cripted_text_braker(corres, spaces)
 
 for cripted_text in cripted_texts:
-    space_pickup = ''
-    colordprint(
-        ACTB.decript(cripted_text, with_num=False),
-        colorful_strength=0.08,
-        customcolor=(1.0, 0.4, 0.55)
-    )
-    colordprint('\e[99m' + ACTB.get_space_letters(cripted_text) + '\e[0m', customcolor=(0.5, 0.5, 0.5))
+    plain_text = ACTB.decript(cripted_text, with_num=False)
+    nums = '\033[0m' + ACTB.get_space_letters(cripted_text) + '\033[0m'
+
+    if platform.system() == 'Darwin':
+        from colordprint import colordprint
+        colordprint(
+            plain_text,
+            colorful_strength=0.08,
+            customcolor=(1.0, 0.4, 0.55)
+        )
+        colordprint(nums, customcolor=(0.5, 0.5, 0.5))
+    else:
+        print(plain_text)
+        print(nums)
