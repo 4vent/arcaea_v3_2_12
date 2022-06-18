@@ -22,14 +22,14 @@ def colordprint(string, end='\n', colorful_strength=0, customcolor=(1.0, 1.0, 1.
     i = 0
     while i < len(string):
         c = string[i]
-        if c == '\\':
-            m = re.match(r'\\e\[([0-9][0-9])m', string[i:i+6])
+        if c == '\033':
+            m = re.match(r'\033\[([0-9][0-9])m', string[i:i+5])
             
-            if string[i:i+5] == '\\e[0m':
+            if string[i:i+4] == '\033[0m':
                 print(buffer, end='')
                 buffer = ''
                 console.set_color()
-                i += 5
+                i += 4
                 continue
             elif m:
                 print(buffer, end='')
@@ -44,10 +44,10 @@ def colordprint(string, end='\n', colorful_strength=0, customcolor=(1.0, 1.0, 1.
                     console.set_color(*colors[m.groups()[0]])
                 else:
                     console.set_color()
-                i += 6
+                i += 5
                 continue
             else:
-                buffer += '\\'
+                buffer += '\033'
         else:
             buffer += c
         
@@ -57,11 +57,11 @@ def colordprint(string, end='\n', colorful_strength=0, customcolor=(1.0, 1.0, 1.
     print(end, end='')
 
 if __name__ == '__main__':
-    colordprint('\e[30mthis is a sample')
-    colordprint('\e[31mthis is a sample')
-    colordprint('\e[32mthis is a sample')
-    colordprint('\e[33mthis is a sample')
-    colordprint('\e[34mthis is a sample')
-    colordprint('\e[35mthis is a sample')
-    colordprint('\e[36mthis is a sample')
-    colordprint('\e[37mthis is a sample\e[0m')
+    colordprint('\033[30mthis is a sample')
+    colordprint('\033[31mthis is a sample')
+    colordprint('\033[32mthis is a sample')
+    colordprint('\033[33mthis is a sample')
+    colordprint('\033[34mthis is a sample')
+    colordprint('\033[35mthis is a sample')
+    colordprint('\033[36mthis is a sample')
+    colordprint('\033[37mthis is a sample\033[0m')

@@ -17,7 +17,7 @@ class arc_cripted_text_braker():
                 else:
                     result += ' '
             elif c in self.corres.keys():
-                result += '\033[31m' + self.corres[c] + '\033[0m'
+                result += '\033[99m' + self.corres[c] + '\033[0m'
             else:
                 result += c
         return result
@@ -50,10 +50,9 @@ cripted_texts = [
 ]
         
 ACTB = arc_cripted_text_braker(corres, spaces)
-
 for cripted_text in cripted_texts:
     plain_text = ACTB.decript(cripted_text, with_num=False)
-    nums = '\033[0m' + ACTB.get_space_letters(cripted_text) + '\033[0m'
+    nums = '\033[99m' + ACTB.get_space_letters(cripted_text) + '\033[0m'
 
     if platform.system() == 'Darwin':
         from colordprint import colordprint
