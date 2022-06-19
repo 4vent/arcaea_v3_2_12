@@ -35,6 +35,17 @@ class arc_cripted_text_braker():
                 space_letters += ' '
         return space_letters
 
+def combination_generator(chardict:dict):
+    combinations = []
+    for k in chardict.keys():
+        if type(chardict[k]) is list:
+            for c in chardict[k]:
+                newdict = chardict.copy()
+                newdict[k] = c
+                combinations += combination_generator(newdict)
+            return combinations
+    return [''.join(chardict.values())]
+
 cripted_texts = [
     "The World of Arcaea welcomes all.",
     "",
@@ -52,8 +63,12 @@ cripted_texts = [
     "",
     "BPD3rEKu4DliKuK,4uPDeDvVeD3vEuD4_EO3GD7VXDeuWeODj.",
     "IVW4DliKu3OVf4hVOU4EvuDe3vEuD7PEK4ueEOKrieDj.",
-    # ''.join(num2char.values())
+    "",
+    "BPiK3iK3OV3rhE_D4uV7KW__WnG4uV3ueEUDjq",
+    "aivD,4DliKuDO_D,3iK3PVrD-vWhh",
 ]
+
+# cripted_texts = combination_generator(num2char)
         
 ACTB = arc_cripted_text_braker(corres, spaces)
 for cripted_text in cripted_texts:
@@ -62,6 +77,7 @@ for cripted_text in cripted_texts:
 
     if platform.system() == 'Darwin':
         from colordprint import colordprint
+        # print(cripted_text)
         colordprint(
             plain_text,
             colorful_strength=0.08,
@@ -69,5 +85,6 @@ for cripted_text in cripted_texts:
         )
         colordprint(nums, customcolor=(0.5, 0.5, 0.5))
     else:
+        # print(cripted_text)
         print(plain_text)
         print(nums)
