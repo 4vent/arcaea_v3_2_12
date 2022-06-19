@@ -1,14 +1,20 @@
+import re
 import sys
 sys.path.append('.')
 from corresponds import corres, spaces, num2char
-import platform
+from colordprint import colordprint
 
 class arc_cripted_text_braker():   
     def __init__(self, correspondence_table:dict, space_list:list):
         self.corres = correspondence_table
         self.spaces = space_list
     
-    def decript(self, text, with_num=False):
+    def decript(self, text, with_num=False, kvswap=False):
+        if kvswap:
+            corres = {v: k for k, v in self.corres.items()}
+        else:
+            corres = self.corres
+        
         result = ''
         for c in text:
             if c in self.spaces:
@@ -17,13 +23,11 @@ class arc_cripted_text_braker():
                     result += '\033[0m' + c + '\033[0m'
                 else:
                     result += ' '
-            elif c in self.corres.keys():
-                if platform.system() == 'Darwin':
-                    result += '\033[99m' + self.corres[c] + '\033[0m'
-                else:
-                    result += '\033[31m' + self.corres[c] + '\033[0m'
+            elif c in corres.keys():
+                result += '\033[99m' + corres[c] + '\033[0m'
             else:
                 result += c
+
         return result
     
     def get_space_letters(self, text):
@@ -47,8 +51,8 @@ def combination_generator(chardict:dict):
     return [''.join(chardict.values())]
 
 cripted_texts = [
-    "The World of Arcaea welcomes all.",
-    "",
+    # "The World of Arcaea welcomes all.",
+    # "",
     "bO3ueWuP,3b4fEK4GVeO4vVe3VOD.",
     "bO4ueWuP,3b4fEK7GVeO7vVe3_VWOuhDKK4VuPDeK.",
     "",
@@ -68,23 +72,24 @@ cripted_texts = [
     "aivD,4DliKuDO_D,3iK3PVrD-vWhh",
 ]
 
-# cripted_texts = combination_generator(num2char)
+# cripted_texts += ["", ' '.join(combination_generator(num2char))]
         
 ACTB = arc_cripted_text_braker(corres, spaces)
+
 for cripted_text in cripted_texts:
-    plain_text = ACTB.decript(cripted_text, with_num=False)
+    plain_text = ACTB.decript(cripted_text, with_num=False, kvswap=False)
     nums = '\033[99m' + ACTB.get_space_letters(cripted_text) + '\033[0m'
 
-    if platform.system() == 'Darwin':
-        from colordprint import colordprint
-        # print(cripted_text)
-        colordprint(
-            plain_text,
-            colorful_strength=0.08,
-            customcolor=(1.0, 0.4, 0.55)
-        )
-        colordprint(nums, customcolor=(0.5, 0.5, 0.5))
-    else:
-        # print(cripted_text)
-        print(plain_text)
-        print(nums)
+    colordprint(
+        plain_text,
+        colorful_strength=0.08,
+        customcolor=(1.0, 0.4, 0.55)
+    )
+    colordprint(nums, customcolor=(0.5, 0.5, 0.5))
+
+# print('')
+# tmp = "The World of Arcaea welcomes all."
+# for _ in range(4):
+#     tmp = ACTB.decript(tmp, kvswap=False)
+#     print(tmp)
+#     tmp = re.sub(r'\033\[[0-9]+m', '', tmp)
