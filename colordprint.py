@@ -14,22 +14,22 @@ def hex2rgb(hex:str, ignore_alpha=True):
     return rgb
 
 colors = {
-    '30': np.array(hex2rgb('090300')),
-    '31': np.array(hex2rgb('DB2D20')),
-    '32': np.array(hex2rgb('01A252')),
-    '33': np.array(hex2rgb('FDED02')),
-    '34': np.array(hex2rgb('01A0E4')),
-    '35': np.array(hex2rgb('A16A94')),
-    '36': np.array(hex2rgb('B5E4F4')),
-    '37': np.array(hex2rgb('A5A2A2')),
-    '90': np.array(hex2rgb('5C5855')),
-    '91': np.array(hex2rgb('DB2D20')),
-    '92': np.array(hex2rgb('01A252')),
-    '93': np.array(hex2rgb('FDED02')),
-    '94': np.array(hex2rgb('01A0E4')),
-    '95': np.array(hex2rgb('A16A94')),
-    '96': np.array(hex2rgb('B5E4F4')),
-    '97': np.array(hex2rgb('F7F7F7')),
+    '30': np.array(hex2rgb('8a8a8a')),
+    '31': np.array(hex2rgb('db6a6a')),
+    '32': np.array(hex2rgb('0dbc79')),
+    '33': np.array(hex2rgb('e5e510')),
+    '34': np.array(hex2rgb('4e8ed3')),
+    '35': np.array(hex2rgb('c965c9')),
+    '36': np.array(hex2rgb('11a8cd')),
+    '37': np.array(hex2rgb('e5e5e5')),
+    '90': np.array(hex2rgb('919191')),
+    '91': np.array(hex2rgb('f14c4c')),
+    '92': np.array(hex2rgb('23d18b')),
+    '93': np.array(hex2rgb('f5f543')),
+    '94': np.array(hex2rgb('3b8eea')),
+    '95': np.array(hex2rgb('d670d6')),
+    '96': np.array(hex2rgb('29b8db')),
+    '97': np.array(hex2rgb('e5e5e5')),
 }
 
 def colordprint_pythonista(string, end='\n', colorful_strength=0, customcolor=(1.0, 1.0, 1.0)):
@@ -95,5 +95,5 @@ if __name__ == '__main__':
     for i in range(10):
         for j in range(10):
             num = i * 10 + j
-            print(f'\033[{num}m{num:03d}\033[0m', end=' ')
+            colordprint(f'\033[{num}m{num:03d}\033[0m', end=' ')
         print('')
