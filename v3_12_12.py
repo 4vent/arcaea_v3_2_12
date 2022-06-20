@@ -28,7 +28,7 @@ cripted_texts = [
     "aivD,4DliKuDO_D,3iK3PVrD-vWhh",
     "",
     "ZiKD7OVf,7EOj3iO4UhEKK7b4fihh4eDnDnGDe4qVW.",
-    "ZiKD7OVf,7EOj3iO4UhEKK7b4fihh4eDnDnGDGDe4qVW."
+    "ZiKD7OVf,7EOj3iO4UhEKK7b4fihh4eDnDnGDe4qVW."
 ]
 
 # cripted_texts += ["", ' '.join(combination_generator(num2char))]
