@@ -42,6 +42,9 @@ corres = {
     '.': '.',
     '?': '?',
     '-': '-',
+
+    # Glass Testament
+    'Z': 'R',
     
     # attempt
     # 'k': 'f',

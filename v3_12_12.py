@@ -4,51 +4,7 @@ sys.path.append('.')
 from corresponds import corres, spaces, num2char
 from colordprint import colordprint
 
-class arc_cripted_text_braker():   
-    def __init__(self, correspondence_table:dict, space_list:list):
-        self.corres = correspondence_table
-        self.spaces = space_list
-    
-    def decript(self, text, with_num=False, kvswap=False):
-        if kvswap:
-            corres = {v: k for k, v in self.corres.items()}
-        else:
-            corres = self.corres
-        
-        result = ''
-        for c in text:
-            if c in self.spaces:
-                if with_num:
-                    result += '\033[0m' + c + '\033[0m'
-                    result += '\033[0m' + c + '\033[0m'
-                else:
-                    result += ' '
-            elif c in corres.keys():
-                result += '\033[99m' + corres[c] + '\033[0m'
-            else:
-                result += c
-
-        return result
-    
-    def get_space_letters(self, text):
-        space_letters = ''
-        for c in text:
-            if c in self.spaces:
-                space_letters += c
-            else:
-                space_letters += ' '
-        return space_letters
-
-def combination_generator(chardict:dict):
-    combinations = []
-    for k in chardict.keys():
-        if type(chardict[k]) is list:
-            for c in chardict[k]:
-                newdict = chardict.copy()
-                newdict[k] = c
-                combinations += combination_generator(newdict)
-            return combinations
-    return [''.join(chardict.values())]
+from ARGTool import arc_cripted_text_braker, combination_generator
 
 cripted_texts = [
     # "The World of Arcaea welcomes all.",
@@ -70,6 +26,9 @@ cripted_texts = [
     "",
     "BPiK3iK3OV3rhE_D4uV7KW__WnG4uV3ueEUDjq",
     "aivD,4DliKuDO_D,3iK3PVrD-vWhh",
+    "",
+    "ZiKD7OVf,7EOj3iO4UhEKK7b4fihh4eDnDnGDe4qVW.",
+    "ZiKD7OVf,7EOj3iO4UhEKK7b4fihh4eDnDnGDGDe4qVW."
 ]
 
 # cripted_texts += ["", ' '.join(combination_generator(num2char))]
